@@ -12,6 +12,8 @@ export class AuthInterceptor implements HttpInterceptor {
     if (loggedUserToken && req.withCredentials) {
       const headers = req.headers.append('Authorization', `Bearer ${loggedUserToken}`);
       req = req.clone({ headers, withCredentials: false });
+    } else {
+      req = req.clone({ withCredentials: false });
     }
 
     return next.handle(req).pipe(
