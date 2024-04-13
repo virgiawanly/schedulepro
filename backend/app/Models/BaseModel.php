@@ -24,6 +24,13 @@ class BaseModel extends Model
     protected $searchableColumns = [];
 
     /**
+     * The columns that will be sorted if the sort parameter is present.
+     *
+     * @var array<string, string>
+     */
+    protected $sortAliases = [];
+
+    /**
      * Scope a query to search for a query.
      *
      * @param  \Illuminate\Database\Eloquent\Builder $query
@@ -58,6 +65,8 @@ class BaseModel extends Model
         if (!$sort) {
             return $query;
         }
+
+        $sort = $this->sortAliases[$sort] ?? $sort;
 
         if (!$order) {
             $order = 'asc';

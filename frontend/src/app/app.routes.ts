@@ -6,6 +6,10 @@ export const routes: Routes = [
     loadChildren: () => import('./modules/admin/admin.routes').then((m) => m.ADMIN_ROUTES),
   },
   {
+    path: 'auth',
+    loadChildren: () => import('./modules/auth/auth.routes').then((m) => m.AUTH_ROUTES),
+  },
+  {
     path: '**',
     pathMatch: 'full',
     redirectTo: 'admin',

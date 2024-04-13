@@ -47,6 +47,8 @@ export class CustomerIndexComponent {
   customers: Customer[] = [];
   customersStatus: string = '';
   customersSearch: string = '';
+  customersSortBy: string = '';
+  customersSortOrder: string = 'asc';
   customersPagination: Pagination = {
     size: 10,
     totalItems: 0,
@@ -61,7 +63,7 @@ export class CustomerIndexComponent {
     { name: 'Phone Number', prop: 'phone', width: 180, resizeable: true },
     { name: 'Address', prop: 'full_address', width: 200, resizeable: true },
     { name: 'Status', prop: 'is_active', width: 100, resizeable: true },
-    { name: 'Action', prop: 'actions', width: 150, resizeable: true },
+    { name: 'Action', prop: 'actions', width: 150, resizeable: true, sortable: false },
   ];
 
   statusOptions = [
@@ -98,6 +100,8 @@ export class CustomerIndexComponent {
           page: this.customersPagination.page,
           search: this.customersSearch ?? '',
           is_active: this.customersStatus ?? '',
+          sort: this.customersSortBy,
+          order: this.customersSortOrder,
         },
       })
       .subscribe({
@@ -160,6 +164,20 @@ export class CustomerIndexComponent {
   onStatusChange(status: string) {
     this.customersPagination.page = 1;
     this.customersStatus = status;
+    this.getCustomers();
+  }
+
+  onSort(event: any) {
+    const sort = event.sorts ? event.sorts[0] : null;
+
+    if (sort) {
+      this.customersSortBy = sort.prop;
+      this.customersSortOrder = sort.dir;
+    } else {
+      this.customersSortBy = '';
+      this.customersSortOrder = 'asc';
+    }
+
     this.getCustomers();
   }
 }
