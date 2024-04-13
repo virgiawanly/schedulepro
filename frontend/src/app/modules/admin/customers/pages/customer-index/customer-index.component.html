@@ -63,6 +63,9 @@
             [count]="customersPagination.totalItems"
             [limit]="customersPagination.size"
             [footerHeight]="customers.length ? 60 : 0"
+            [loadingIndicator]="true"
+            [externalSorting]="true"
+            (sort)="onSort($event)"
           >
             @for (column of columns; track $index) {
               <ngx-datatable-column
@@ -70,8 +73,9 @@
                 [prop]="column.prop ?? ''"
                 [width]="column.width ?? 100"
                 [resizeable]="column.resizeable ?? true"
+                [sortable]="column.sortable ?? true"
                 headerClass="text-left relative bg-slate-100 dark:bg-zink-600 after:absolute ltr:after:border-l-2 rtl:after:border-r-2 ltr:after:left-0 rtl:after:right-0 after:top-0 after:bottom-0 after:border-transparent [&.active]:after:border-custom-500 [&.active]:bg-slate-100 dark:[&.active]:bg-zink-600 px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
-                cellClass="px-3.5 py-2.5 first:pl-5 overflow-visible"
+                [cellClass]="isLoadingCustomers ? 'opacity-50 px-3.5 py-2.5 first:pl-5 overflow-visible' : 'px-3.5 py-2.5 first:pl-5 overflow-visible'"
               >
                 <ng-template ngx-datatable-cell-template let-row="row" let-value="value" let-rowIndex="rowIndex">
                   @if (column.prop === 'uuid') {
@@ -146,23 +150,24 @@
             @if (customers.length) {
               <ngx-datatable-footer class="customersTablefooter">
                 <ng-template ngx-datatable-footer-template>
-                  <div class="grow pl-5">
-                    <p class="text-slate-500 dark:text-zink-200">
-                      Showing <b>{{ customers.length }}</b> of <b>{{ customersPagination.totalItems }}</b> Results
-                    </p>
+                  <div class="px-5 flex items-center justify-center md:justify-between w-full">
+                    <div class="grow hidden md:block">
+                      <p class="text-slate-500 dark:text-zink-200">
+                        Showing <b>{{ customers.length }}</b> of <b>{{ customersPagination.totalItems }}</b> Results
+                      </p>
+                    </div>
+                    <pagination-controls
+                      [darkLinks]="true"
+                      [boundryLinks]="false"
+                      previousLabel="Prev"
+                      nextLabel="Next"
+                      [itemsPerPage]="customersPagination.size"
+                      [currentPage]="customersPagination.page"
+                      [total]="customersPagination.totalItems"
+                      (pageChanged)="onPageNumberChange($event)"
+                    >
+                    </pagination-controls>
                   </div>
-                  <pagination-controls
-                    class="pr-5"
-                    [darkLinks]="true"
-                    [boundryLinks]="false"
-                    previousLabel="Prev"
-                    nextLabel="Next"
-                    [itemsPerPage]="customersPagination.size"
-                    [currentPage]="customersPagination.page"
-                    [total]="customersPagination.totalItems"
-                    (pageChanged)="onPageNumberChange($event)"
-                  >
-                  </pagination-controls>
                 </ng-template>
               </ngx-datatable-footer>
             }

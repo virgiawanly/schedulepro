@@ -74,6 +74,16 @@ class Customer extends BaseModel
     ];
 
     /**
+     * The columns that will be sorted if the sort parameter is present.
+     *
+     * @var array<string, string>
+     */
+    protected $sortAliases = [
+        'full_address' => 'address_line_1',
+        'uuid' => 'id',
+    ];
+
+    /**
      * The attributes that should be appended to the model.
      *
      * @var array
