@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+@import '../node_modules/@ng-select/ng-select/themes/default.theme.css';
+@import 'ngx-lightbox/lightbox.css';
+
+datatable-body-cell {
+  display: flex !important;
+  align-items: center !important;
+}
+
+datatable-selection {
+  .empty-row {
+    display: none !important;
+  }
+}
+
+datatable-footer {
+  .datatable-footer-inner .page-count {
+    display: none !important;
+  }
+}

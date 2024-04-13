@@ -1,0 +1,111 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <button type="submit" class="hidden"></button>
+  <div class="grid grid-cols-1 gap-5 md:grid-cols-12">
+    <div class="md:col-span-12">
+      <label class="inline-block mb-2 text-base font-medium">Customer Name <span class="text-red-500">*</span></label>
+      <input
+        type="text"
+        formControlName="name"
+        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+        placeholder="Enter customer name"
+      />
+      @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+        <div class="mt-1 text-red-500 text-sm">Customer name is required</div>
+      }
+    </div>
+    <!--end col-->
+    <div class="md:col-span-6">
+      <label class="inline-block mb-2 text-base font-medium">Email <span class="text-red-500">*</span></label>
+      <input
+        type="text"
+        formControlName="email"
+        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+        placeholder="Enter email address"
+      />
+      @if (form.get('email')?.hasError('required') && form.get('email')?.touched) {
+        <div class="mt-1 text-red-500 text-sm">Email is required</div>
+      }
+    </div>
+    <!--end col-->
+    <div class="md:col-span-6">
+      <label class="inline-block mb-2 text-base font-medium">Phone Number</label>
+      <input
+        type="tel"
+        formControlName="phone"
+        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+        placeholder="Enter phone number"
+      />
+    </div>
+    <!--end col-->
+    <div class="md:col-span-6">
+      <label class="inline-block mb-2 text-base font-medium">Address line 1 <span class="text-red-500">*</span></label>
+      <input
+        type="text"
+        formControlName="address_line_1"
+        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+        placeholder="Enter address line 1"
+      />
+      @if (form.get('address_line_1')?.hasError('required') && form.get('address_line_1')?.touched) {
+        <div class="mt-1 text-red-500 text-sm">Address line 1 is required</div>
+      }
+    </div>
+    <!--end col-->
+    <div class="md:col-span-6">
+      <label class="inline-block mb-2 text-base font-medium">Address line 2</label>
+      <input
+        type="text"
+        formControlName="address_line_2"
+        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+        placeholder="Enter address line 2"
+      />
+    </div>
+    <!--end col-->
+    <div class="md:col-span-6">
+      <label class="inline-block mb-2 text-base font-medium">City <span class="text-red-500">*</span></label>
+      <input
+        type="text"
+        formControlName="city"
+        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+        placeholder="Enter city"
+      />
+      @if (form.get('city')?.hasError('required') && form.get('city')?.touched) {
+        <div class="mt-1 text-red-500 text-sm">City is required</div>
+      }
+    </div>
+    <!--end col-->
+    <div class="md:col-span-6">
+      <label class="inline-block mb-2 text-base font-medium">State/Province <span class="text-red-500">*</span></label>
+      <input
+        type="text"
+        formControlName="state"
+        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+        placeholder="Enter state/province"
+      />
+      @if (form.get('state')?.hasError('required') && form.get('state')?.touched) {
+        <div class="mt-1 text-red-500 text-sm">State/Province is required</div>
+      }
+    </div>
+    <!--end col-->
+    <div class="md:col-span-6">
+      <label class="inline-block mb-2 text-base font-medium">Zip Code <span class="text-red-500">*</span></label>
+      <input
+        type="text"
+        formControlName="zip_code"
+        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+        placeholder="Enter zip code"
+      />
+      @if (form.get('zip_code')?.hasError('required') && form.get('zip_code')?.touched) {
+        <div class="mt-1 text-red-500 text-sm">Zip code is required</div>
+      }
+    </div>
+    <!--end col-->
+    <div class="md:col-span-6">
+      <label class="inline-block mb-2 text-base font-medium">Status <span class="text-red-500">*</span></label>
+      <ng-select [items]="statusOptions" placeholder="Select status" bindLabel="label" bindValue="value" [clearable]="false" formControlName="is_active"></ng-select>
+      @if (form.get('is_active')?.hasError('required') && form.get('is_active')?.touched) {
+        <div class="mt-1 text-red-500 text-sm">Status is required</div>
+      }
+    </div>
+    <!--end col-->
+  </div>
+</form>
