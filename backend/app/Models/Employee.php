@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\AutoGenerateUuid;
 use App\Traits\ScopedByCompanyAndLocation;
+use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -39,6 +40,19 @@ class Employee extends BaseModel
         'company_id',
         'location_id',
         'join_date',
+    ];
+
+    /**
+     * The columns or expressions that will be sorted if the given parameter exists.
+     *
+     * @var array<string, string>
+     */
+    protected $sortColumns = [
+        'email' => 'users.email',
+        'employee_number' => 'employees.employee_number',
+        'name' => 'CONCAT(users.first_name, " ", users.last_name)',
+        'phone' => 'users.phone',
+        'uuid' => 'employees.id',
     ];
 
     /**

@@ -7,6 +7,7 @@ use App\Traits\AutoGenerateUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -78,6 +79,7 @@ class User extends Authenticatable
      */
     protected $appends = [
         'full_name',
+        'image_url',
         'can_access_multiple_locations',
     ];
 
@@ -109,5 +111,15 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return $this->getAttributeValue('first_name') . ' ' . $this->getAttributeValue('last_name');
+    }
+
+    /**
+     * Get image url attribute.
+     *
+     * @return string
+     */
+    public function getImageUrlAttribute()
+    {
+        return $this->image ? Storage::url($this->image) : null;
     }
 }

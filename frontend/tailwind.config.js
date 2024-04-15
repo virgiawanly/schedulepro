@@ -19,7 +19,7 @@ module.exports = {
   darkMode: ['class', '[data-mode="dark"]'],
   theme: {
     fontFamily: {
-      public: ['"Public Sans", sans-serif'],
+      public: ['"DM Sans", "Public Sans", sans-serif'],
       tourney: ['"Tourney", sans-serif'],
       remix: ['remixicon'],
     },

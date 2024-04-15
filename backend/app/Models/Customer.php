@@ -74,11 +74,11 @@ class Customer extends BaseModel
     ];
 
     /**
-     * The columns that will be sorted if the sort parameter is present.
+     * The columns or expressions that will be sorted if the given parameter exists.
      *
      * @var array<string, string>
      */
-    protected $sortAliases = [
+    protected $sortColumns = [
         'full_address' => 'address_line_1',
         'uuid' => 'id',
     ];
