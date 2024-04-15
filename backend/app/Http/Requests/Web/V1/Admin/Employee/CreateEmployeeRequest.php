@@ -25,7 +25,7 @@ class CreateEmployeeRequest extends FormRequest
         return [
             'first_name' => 'required',
             'last_name' => 'nullable',
-            'username' => 'required|alpha_dash|unique:users,username',
+            'username' => 'required|alpha_dash|unique:users,username|min:3',
             'email' => 'required|unique:users,email',
             'phone' => 'nullable',
             'password' => 'required|confirmed',

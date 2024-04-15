@@ -1,0 +1,212 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <button type="submit" class="hidden"></button>
+  <div class="grid grid-cols-12 gap-x-6 gap-y-10">
+    <div class="col-span-12 lg:col-span-3 2xl:col-span-2">
+      <div class="flex flex-col items-center gap-6">
+        @if (imagePreview) {
+          <div class="relative">
+            <label (click)="imageFileInput.click()">
+              <img [src]="imagePreview" class="w-44 h-auto max-w-full aspect-square hover:opacity-80 duration-150 cursor-pointer rounded-full" alt="" />
+            </label>
+          </div>
+          <div class="flex flex-col items-center gap-3 w-full">
+            <button
+              type="button"
+              class="w-full max-w-48 text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"
+              (click)="imageFileInput.click()"
+            >
+              <lucide-angular name="pencil" [class]="'inline-block size-4 mr-1'"></lucide-angular> <span class="align-middle"> Change Image</span>
+            </button>
+            <button
+              type="button"
+              class="w-full max-w-48 bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20"
+              (click)="removeImage()"
+            >
+              <lucide-angular name="trash-2" [class]="'inline-block size-4 mr-1'"></lucide-angular> <span class="align-middle"> Remove Image</span>
+            </button>
+          </div>
+        } @else {
+          <div class="relative">
+            <label
+              class="w-44 h-auto max-w-full aspect-square bg-gray-100 dark:bg-zink-600 hover:opacity-80 duration-150 cursor-pointer rounded-full grid place-items-center"
+              (click)="imageFileInput.click()"
+            >
+              <lucide-angular name="image" [class]="'size-16 text-gray-300 dark:text-slate-200'"></lucide-angular>
+            </label>
+          </div>
+          <div class="flex flex-col items-center gap-3 w-full">
+            <button
+              type="button"
+              class="w-full max-w-48 bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20"
+              (click)="imageFileInput.click()"
+            >
+              <lucide-angular name="image-plus" [class]="'inline-block size-4 mr-1'"></lucide-angular> <span class="align-middle"> Select Image</span>
+            </button>
+          </div>
+        }
+      </div>
+      <input #imageFileInput type="file" class="hidden" (change)="onImageChange($event)" accept="image/*" />
+    </div>
+    <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-12">
+        <div class="md:col-span-6">
+          <label class="inline-block mb-2 text-base font-medium">First Name <span class="text-red-500">*</span></label>
+          <input
+            type="text"
+            formControlName="first_name"
+            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+            placeholder="Enter first name"
+          />
+          @if (form.get('first_name')?.hasError('required') && form.get('first_name')?.touched) {
+            <div class="mt-1 text-red-500 text-sm">First name is required</div>
+          }
+        </div>
+        <!--end col-->
+        <div class="md:col-span-6">
+          <label class="inline-block mb-2 text-base font-medium">Last Name</label>
+          <input
+            type="text"
+            formControlName="last_name"
+            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+            placeholder="Enter last name"
+          />
+        </div>
+        <!--end col-->
+        <div class="md:col-span-6">
+          <label class="inline-block mb-2 text-base font-medium">Username <span class="text-red-500">*</span></label>
+          <input
+            type="text"
+            formControlName="username"
+            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+            placeholder="Enter username"
+          />
+          @if (form.get('username')?.hasError('required') && form.get('username')?.touched) {
+            <div class="mt-1 text-red-500 text-sm">Username is required</div>
+          } @else if (form.get('username')?.hasError('minlength') && form.get('username')?.touched) {
+            <div class="mt-1 text-red-500 text-sm">Username must be at least 3 characters</div>
+          } @else if (form.get('username')?.hasError('pattern') && form.get('username')?.touched) {
+            <div class="mt-1 text-red-500 text-sm">Username may only contain letters, numbers, dashes, and underscores.</div>
+          }
+        </div>
+        <!--end col-->
+        <div class="md:col-span-6">
+          <label class="inline-block mb-2 text-base font-medium">Email <span class="text-red-500">*</span></label>
+          <input
+            type="text"
+            formControlName="email"
+            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+            placeholder="Enter email address"
+          />
+          @if (form.get('email')?.hasError('required') && form.get('email')?.touched) {
+            <div class="mt-1 text-red-500 text-sm">Email is required</div>
+          } @else if (form.get('email')?.hasError('email') && form.get('email')?.touched) {
+            <div class="mt-1 text-red-500 text-sm">Email is invalid</div>
+          }
+        </div>
+        <!--end col-->
+        <div class="md:col-span-6">
+          <label class="inline-block mb-2 text-base font-medium">Employee Number</label>
+          <input
+            type="text"
+            formControlName="employee_number"
+            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+            placeholder="Enter employee number"
+          />
+        </div>
+        <!--end col-->
+        <div class="md:col-span-6">
+          <label class="inline-block mb-2 text-base font-medium">Phone Number</label>
+          <input
+            type="tel"
+            formControlName="phone"
+            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+            placeholder="Enter phone number"
+          />
+        </div>
+        <!--end col-->
+        <div class="md:col-span-6">
+          <label class="inline-block mb-2 text-base font-medium">Birthdate</label>
+          <input
+            type="text"
+            mwlFlatpickr
+            formControlName="birthdate"
+            [flatpickrOptions]="{ enableTime: false, dateFormat: 'Y-m-d' }"
+            data-provider="flatpickr"
+            data-date-formate="Y-m-d"
+            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+            readonly="readonly"
+            placeholder="Select birthdate"
+          />
+        </div>
+        <!--end col-->
+        <div class="md:col-span-6">
+          <label class="inline-block mb-2 text-base font-medium">Join Date</label>
+          <input
+            type="text"
+            mwlFlatpickr
+            formControlName="join_date"
+            [flatpickrOptions]="{ enableTime: false, dateFormat: 'Y-m-d' }"
+            data-provider="flatpickr"
+            data-date-formate="Y-m-d"
+            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+            readonly="readonly"
+            placeholder="Select join date"
+          />
+        </div>
+        <!--end col-->
+        <div class="md:col-span-6">
+          <label class="inline-block mb-2 text-base font-medium">
+            Password
+            @if (!employee) {
+              <span class="text-red-500">*</span>
+            }
+          </label>
+          <input
+            type="password"
+            formControlName="password"
+            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+            placeholder="Enter password"
+          />
+          @if (form.get('password')?.hasError('required') && form.get('password')?.touched) {
+            <div class="mt-1 text-red-500 text-sm">Password is required</div>
+          }
+        </div>
+        <!--end col-->
+        <div class="md:col-span-6">
+          <label class="inline-block mb-2 text-base font-medium">
+            Confirm Password
+            @if (!employee) {
+              <span class="text-red-500">*</span>
+            }
+          </label>
+          <input
+            type="password"
+            formControlName="password_confirmation"
+            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+            placeholder="Enter password confirmation"
+          />
+          @if (form.get('password_confirmation')?.hasError('required') && form.get('password_confirmation')?.touched) {
+            <div class="mt-1 text-red-500 text-sm">Password confirmation is required</div>
+          }
+        </div>
+        <!--end col-->
+        <div class="md:col-span-6">
+          <label class="inline-block mb-2 text-base font-medium">Gender <span class="text-red-500">*</span></label>
+          <ng-select [items]="genderOptions" placeholder="Select gender" bindLabel="label" bindValue="value" [clearable]="false" formControlName="gender"></ng-select>
+          @if (form.get('gender')?.hasError('required') && form.get('gender')?.touched) {
+            <div class="mt-1 text-red-500 text-sm">Gender is required</div>
+          }
+        </div>
+        <!--end col-->
+        <div class="md:col-span-6">
+          <label class="inline-block mb-2 text-base font-medium">Status <span class="text-red-500">*</span></label>
+          <ng-select [items]="statusOptions" placeholder="Select status" bindLabel="label" bindValue="value" [clearable]="false" formControlName="is_active"></ng-select>
+          @if (form.get('is_active')?.hasError('required') && form.get('is_active')?.touched) {
+            <div class="mt-1 text-red-500 text-sm">Status is required</div>
+          }
+        </div>
+        <!--end col-->
+      </div>
+    </div>
+  </div>
+</form>

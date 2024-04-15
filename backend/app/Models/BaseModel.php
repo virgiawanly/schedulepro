@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\DefaultActivityLog;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class BaseModel extends Model
 {
@@ -24,11 +25,11 @@ class BaseModel extends Model
     protected $searchableColumns = [];
 
     /**
-     * The columns that will be sorted if the sort parameter is present.
+     * The columns or expressions that will be sorted if the given parameter exists.
      *
      * @var array<string, string>
      */
-    protected $sortAliases = [];
+    protected $sortColumns = [];
 
     /**
      * Scope a query to search for a query.
@@ -66,13 +67,13 @@ class BaseModel extends Model
             return $query;
         }
 
-        $sort = $this->sortAliases[$sort] ?? $sort;
+        $sort = $this->sortColumns[$sort] ?? $sort;
 
         if (!$order) {
             $order = 'asc';
         }
 
-        return $query->orderBy($sort, $order);
+        return $query->orderBy(DB::raw($sort), $order);
     }
 
     /**

@@ -26,7 +26,7 @@ class UpdateCustomerRequest extends FormRequest
             'email' => 'required',
             'phone' => 'nullable',
             'address_line_1' => 'required',
-            'address_line_2' => 'required',
+            'address_line_2' => 'nullable',
             'city' => 'required',
             'state' => 'required',
             'zip_code' => 'required',

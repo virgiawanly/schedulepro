@@ -18,6 +18,8 @@ class LocationScope implements Scope
     public function apply(Builder $builder, Model $model): void
     {
         $locationId = $model->location_id;
+        $tableName = $model->getTable();
+
         if (auth()->check()) {
             $user = auth()->user();
 
@@ -30,6 +32,6 @@ class LocationScope implements Scope
             }
         }
 
-        $builder->where('location_id', $locationId);
+        $builder->where($tableName . '.location_id', $locationId);
     }
 }

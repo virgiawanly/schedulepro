@@ -17,12 +17,14 @@ class CompanyScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
+        $tableName = $model->getTable();
+
         if (auth()->check()) {
             $companyId = auth()->user()->company_id;
         } else {
             $companyId = $model->company_id;
         }
 
-        $builder->where('company_id', $companyId);
+        $builder->where($tableName . '.company_id', $companyId);
     }
 }

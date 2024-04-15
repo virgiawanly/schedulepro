@@ -60,7 +60,8 @@ class EmployeeService
                 'password' => !empty($payload['password']) ? bcrypt($payload['password']) : null,
                 'birthdate' => $payload['birthdate'] ?? null,
                 'company_id' => auth()->user()->company_id,
-                'is_active' => true,
+                'is_active' => $payload['is_active'] ?? true,
+                'gender' => $payload['gender'] ?? null,
                 'role' => UserRole::EMPLOYEE->value,
             ];
 
@@ -111,11 +112,15 @@ class EmployeeService
                 'username' => $payload['username'] ?? $user->username,
                 'phone' => $payload['phone'] ?? $user->phone,
                 'address' => $payload['address'] ?? $user->address,
+                'gender' => $payload['gender'] ?? null,
                 'is_active' => $payload['is_active'] ?? $user->is_active,
+                'birthdate' => $payload['birthdate'] ?? null,
             ];
 
             if ($request->hasFile('image')) {
                 $userPayload['image'] = $request->file('image')->store('users');
+            } else if($request->has('is_image_removed') && $request->is_image_removed) {
+                $userPayload['image'] = null;
             }
 
             if ($request->has('password')) {
@@ -126,6 +131,7 @@ class EmployeeService
 
             $employeePayload = [
                 'employee_number' => $payload['employee_number'] ?? null,
+                'join_date' => $payload['join_date'] ?? null,
             ];
 
             $employee->update($employeePayload);
