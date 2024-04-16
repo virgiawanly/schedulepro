@@ -13,6 +13,7 @@
         <div class="mt-1 text-red-500 text-sm">Product/service name is required</div>
       }
     </div>
+    <!--end col-->
     <div class="md:col-span-12">
       <label class="inline-block mb-2 text-base font-medium">Description</label>
       <textarea
@@ -37,6 +38,7 @@
         <div class="mt-1 text-red-500 text-sm">Price must be greater than or equal to 0</div>
       }
     </div>
+    <!--end col-->
     <div class="md:col-span-6">
       <label class="inline-block mb-2 text-base font-medium">Status <span class="text-red-500">*</span></label>
       <ng-select [items]="statusOptions" placeholder="Select status" bindLabel="label" bindValue="value" [clearable]="false" formControlName="is_active"></ng-select>

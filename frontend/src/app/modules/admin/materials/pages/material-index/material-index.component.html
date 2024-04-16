@@ -1,11 +1,11 @@
-<app-page-title [title]="'Service List'" [pagetitle]="'Services'"></app-page-title>
+<app-page-title [title]="'Material List'" [pagetitle]="'Materials'"></app-page-title>
 
 <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-12">
   <div class="xl:col-span-12">
     <div class="card">
       <div class="card-body">
         <div class="flex items-center">
-          <h6 class="text-15 grow">Service List</h6>
+          <h6 class="text-15 grow">Material List</h6>
           <div class="shrink-0 flex items-center gap-3">
             <div>
               <button
@@ -16,11 +16,11 @@
               </button>
             </div>
             <button
-              routerLink="/admin/products/create"
+              routerLink="/admin/materials/create"
               class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"
             >
               <lucide-angular name="plus" [class]="'inline-block size-4'"></lucide-angular>
-              <span class="align-middle"> Create Service</span>
+              <span class="align-middle"> Create Material</span>
             </button>
           </div>
         </div>
@@ -33,8 +33,8 @@
               class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
               placeholder="Search for name, description, etc..."
               autocomplete="off"
-              [(ngModel)]="productsSearch"
-              (ngModelChange)="onSearchProducts($event)"
+              [(ngModel)]="materialsSearch"
+              (ngModelChange)="onSearchMaterials($event)"
             />
             <lucide-angular
               name="search"
@@ -43,26 +43,26 @@
           </div>
           <!--end col-->
           <div class="xl:col-span-2">
-            <ng-select [items]="statusOptions" bindValue="value" bindLabel="name" placeholder="Select Status" [(ngModel)]="productsStatus" (ngModelChange)="onStatusChange($event)"></ng-select>
+            <ng-select [items]="statusOptions" bindValue="value" bindLabel="name" placeholder="Select Status" [(ngModel)]="materialsStatus" (ngModelChange)="onStatusChange($event)"></ng-select>
           </div>
           <!--end col-->
         </div>
       </div>
       <div class="card-body">
         <div class="-mx-5 -mb-5 overflow-x-auto">
-          <!-- products table -->
+          <!-- materials table -->
           <ngx-datatable
-            #productsTable
-            [rows]="products"
+            #materialsTable
+            [rows]="materials"
             [columnMode]="'force'"
             [headerHeight]="42"
             [footerHeight]="60"
             [rowHeight]="'auto'"
             [scrollbarH]="true"
-            [offset]="productsPagination.page"
-            [count]="productsPagination.totalItems"
-            [limit]="productsPagination.size"
-            [footerHeight]="products.length ? 60 : 0"
+            [offset]="materialsPagination.page"
+            [count]="materialsPagination.totalItems"
+            [limit]="materialsPagination.size"
+            [footerHeight]="materials.length ? 60 : 0"
             [loadingIndicator]="true"
             [externalSorting]="true"
             (sort)="onSort($event)"
@@ -75,7 +75,7 @@
                 [resizeable]="column.resizeable ?? true"
                 [sortable]="column.sortable ?? true"
                 headerClass="text-left relative bg-slate-100 dark:bg-zink-600 after:absolute ltr:after:border-l-2 rtl:after:border-r-2 ltr:after:left-0 rtl:after:right-0 after:top-0 after:bottom-0 after:border-transparent [&.active]:after:border-custom-500 [&.active]:bg-slate-100 dark:[&.active]:bg-zink-600 px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort"
-                [cellClass]="isLoadingProducts ? 'opacity-50 px-3.5 py-2.5 first:pl-5 overflow-visible' : 'px-3.5 py-2.5 first:pl-5 overflow-visible'"
+                [cellClass]="isLoadingMaterials ? 'opacity-50 px-3.5 py-2.5 first:pl-5 overflow-visible' : 'px-3.5 py-2.5 first:pl-5 overflow-visible'"
               >
                 <ng-template ngx-datatable-cell-template let-row="row" let-value="value" let-rowIndex="rowIndex">
                   @if (column.prop === 'uuid') {
@@ -87,9 +87,20 @@
                       />
                     </div>
                   } @else if (column.prop === 'name') {
-                    <h6>
-                      <a [routerLink]="'/admin/products/' + row.uuid" class="name">{{ value }}</a>
-                    </h6>
+                    <div class="flex items-center gap-3">
+                      <div class="flex items-center justify-center size-10 font-medium rounded-full shrink-0 bg-slate-200 text-slate-600 dark:text-zink-50 dark:bg-zink-600">
+                        @if (row.image) {
+                          <img src="{{ row.image_url }}" alt="" class="h-10 rounded-full" />
+                        } @else {
+                          <lucide-angular name="wrench" [class]="'size-5'"></lucide-angular>
+                        }
+                      </div>
+                      <div class="grow">
+                        <h6>
+                          <a [routerLink]="'/admin/materials/' + row.uuid" class="name">{{ value }}</a>
+                        </h6>
+                      </div>
+                    </div>
                   } @else if (column.prop === 'is_active') {
                     <span
                       class="px-2.5 py-0.5 text-xs font-medium rounded border border-transparent dark:border-transparent inline-flex items-center status"
@@ -109,18 +120,18 @@
                     <div class="flex gap-3">
                       <a
                         class="flex items-center justify-center size-8 transition-all duration-200 ease-linear rounded-md bg-slate-100 text-slate-500 hover:text-custom-500 hover:bg-custom-100 dark:bg-zink-600 dark:text-zink-200 dark:hover:bg-custom-500/20 dark:hover:text-custom-500"
-                        [routerLink]="'/admin/products/' + row.uuid"
+                        [routerLink]="'/admin/materials/' + row.uuid"
                       >
                         <lucide-angular name="eye" [class]="'inline-block size-4'"></lucide-angular>
                       </a>
                       <a
-                        [routerLink]="'/admin/products/' + row.uuid + '/edit'"
+                        [routerLink]="'/admin/materials/' + row.uuid + '/edit'"
                         class="flex items-center justify-center size-8 transition-all duration-200 ease-linear rounded-md edit-item-btn bg-slate-100 text-slate-500 hover:text-custom-500 hover:bg-custom-100 dark:bg-zink-600 dark:text-zink-200 dark:hover:bg-custom-500/20 dark:hover:text-custom-500"
                       >
                         <lucide-angular name="pencil" [class]="'size-4'"></lucide-angular>
                       </a>
                       <a
-                        (click)="setProductToDelete(row)"
+                        (click)="setMaterialToDelete(row)"
                         [appModalTrigger]="'deleteModal'"
                         class="flex items-center justify-center size-8 transition-all duration-200 ease-linear rounded-md remove-item-btn bg-slate-100 text-slate-500 hover:text-custom-500 hover:bg-custom-100 dark:bg-zink-600 dark:text-zink-200 dark:hover:bg-custom-500/20 dark:hover:text-custom-500"
                       >
@@ -138,13 +149,13 @@
               </ngx-datatable-column>
             }
 
-            @if (products.length) {
-              <ngx-datatable-footer class="productsTablefooter">
+            @if (materials.length) {
+              <ngx-datatable-footer class="materialsTablefooter">
                 <ng-template ngx-datatable-footer-template>
                   <div class="px-5 flex items-center justify-center md:justify-between w-full">
                     <div class="grow hidden md:block">
                       <p class="text-slate-500 dark:text-zink-200">
-                        Showing <b>{{ products.length }}</b> of <b>{{ productsPagination.totalItems }}</b> Results
+                        Showing <b>{{ materials.length }}</b> of <b>{{ materialsPagination.totalItems }}</b> Results
                       </p>
                     </div>
                     <pagination-controls
@@ -152,9 +163,9 @@
                       [boundryLinks]="false"
                       previousLabel="Prev"
                       nextLabel="Next"
-                      [itemsPerPage]="productsPagination.size"
-                      [currentPage]="productsPagination.page"
-                      [total]="productsPagination.totalItems"
+                      [itemsPerPage]="materialsPagination.size"
+                      [currentPage]="materialsPagination.page"
+                      [total]="materialsPagination.totalItems"
                       (pageChanged)="onPageNumberChange($event)"
                     >
                     </pagination-controls>
@@ -163,9 +174,9 @@
               </ngx-datatable-footer>
             }
           </ngx-datatable>
-          <!-- ! products table -->
+          <!-- ! materials table -->
 
-          @if (!products.length && isLoadingProducts) {
+          @if (!materials.length && isLoadingMaterials) {
             <!-- loading -->
             <div class="noresult">
               <div class="h-36 text-center grid place-items-center">
@@ -175,7 +186,7 @@
             <!-- ! loading -->
           }
 
-          @if (!products.length && !isLoadingProducts) {
+          @if (!materials.length && !isLoadingMaterials) {
             <!-- no result -->
             <div class="noresult">
               <div class="h-36 grid place-items-center">
@@ -198,7 +209,7 @@
 </div>
 <!--end grid-->
 
-<!-- add product modal -->
+<!-- add material modal -->
 <ng-modals id="deleteModal" [placement]="'modal-center'" className="fixed flex flex-col transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4">
   <div class="w-screen max-w-[420px] md:w-[25rem] bg-white shadow rounded-md dark:bg-zink-600">
     <div class="max-h-[calc(theme('height.screen')_-_180px)] overflow-y-auto px-6 py-8">
@@ -222,13 +233,13 @@
           </button>
           <button
             type="submit"
-            (click)="deleteProduct()"
+            (click)="deleteMaterial()"
             dismissModal
             [ModalDismiss]="'deleteModal'"
             class="text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20 w-32 max-w-full"
-            [disabled]="isDeletingProduct"
+            [disabled]="isDeletingMaterial"
           >
-            @if (isDeletingProduct) {
+            @if (isDeletingMaterial) {
               <div class="inline-block size-3 border-2 rounded-full animate-spin border-l-transparent border-white"></div>
             } @else {
               <span>Yes, Delete It!</span>
@@ -239,4 +250,4 @@
     </div>
   </div>
 </ng-modals>
-<!-- ! delete product modal -->
+<!-- ! delete material modal -->
