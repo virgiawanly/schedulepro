@@ -18,6 +18,11 @@ export const ADMIN_ROUTES: Routes = [
         loadChildren: () => import('./employees/employees.routes').then((m) => m.EMPLOYEES_ROUTES),
       },
       {
+        path: 'products',
+        canActivate: [authGuard],
+        loadChildren: () => import('./products/products.routes').then((m) => m.PRODUCTS_ROUTES),
+      },
+      {
         path: '**',
         pathMatch: 'full',
         redirectTo: 'dashboard',
