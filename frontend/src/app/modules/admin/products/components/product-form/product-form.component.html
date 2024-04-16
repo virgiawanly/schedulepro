@@ -1,0 +1,49 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <button type="submit" class="hidden"></button>
+  <div class="grid grid-cols-1 gap-5 md:grid-cols-12">
+    <div class="md:col-span-12">
+      <label class="inline-block mb-2 text-base font-medium">Product/Service Name <span class="text-red-500">*</span></label>
+      <input
+        type="text"
+        formControlName="name"
+        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+        placeholder="Enter product/service name"
+      />
+      @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+        <div class="mt-1 text-red-500 text-sm">Product/service name is required</div>
+      }
+    </div>
+    <div class="md:col-span-12">
+      <label class="inline-block mb-2 text-base font-medium">Description</label>
+      <textarea
+        formControlName="description"
+        placeholder="Enter description"
+        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+        rows="3"
+      ></textarea>
+    </div>
+    <!--end col-->
+    <div class="md:col-span-6">
+      <label class="inline-block mb-2 text-base font-medium">Price <span class="text-red-500">*</span></label>
+      <input
+        type="number"
+        formControlName="price"
+        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+        placeholder="Enter price"
+      />
+      @if (form.get('price')?.hasError('required') && form.get('price')?.touched) {
+        <div class="mt-1 text-red-500 text-sm">Price is required</div>
+      } @else if (form.get('price')?.hasError('min') && form.get('price')?.touched) {
+        <div class="mt-1 text-red-500 text-sm">Price must be greater than or equal to 0</div>
+      }
+    </div>
+    <div class="md:col-span-6">
+      <label class="inline-block mb-2 text-base font-medium">Status <span class="text-red-500">*</span></label>
+      <ng-select [items]="statusOptions" placeholder="Select status" bindLabel="label" bindValue="value" [clearable]="false" formControlName="is_active"></ng-select>
+      @if (form.get('is_active')?.hasError('required') && form.get('is_active')?.touched) {
+        <div class="mt-1 text-red-500 text-sm">Status is required</div>
+      }
+    </div>
+    <!--end col-->
+  </div>
+</form>

@@ -53,8 +53,8 @@ export const MENU: MenuItem[] = [
     subItems: [
       {
         id: 8.1,
-        label: 'Services',
-        link: '/admin/services',
+        label: 'Product/Services',
+        link: '/admin/products',
         parentId: 8,
       },
       {
