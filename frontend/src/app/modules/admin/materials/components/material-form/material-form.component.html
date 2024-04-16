@@ -1,0 +1,110 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <button type="submit" class="hidden"></button>
+  <div class="grid grid-cols-12 gap-x-6 gap-y-10">
+    <div class="col-span-12 lg:col-span-3 2xl:col-span-2">
+      <div class="flex flex-col items-center gap-6">
+        @if (imagePreview) {
+          <div class="relative">
+            <label (click)="imageFileInput.click()">
+              <img [src]="imagePreview" class="w-44 h-auto max-w-full aspect-square hover:opacity-80 duration-150 cursor-pointer rounded-full" alt="" />
+            </label>
+          </div>
+          <div class="flex flex-col items-center gap-3 w-full">
+            <button
+              type="button"
+              class="w-full max-w-48 text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"
+              (click)="imageFileInput.click()"
+            >
+              <lucide-angular name="pencil" [class]="'inline-block size-4 mr-1'"></lucide-angular> <span class="align-middle"> Change Image</span>
+            </button>
+            <button
+              type="button"
+              class="w-full max-w-48 bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20"
+              (click)="removeImage()"
+            >
+              <lucide-angular name="trash-2" [class]="'inline-block size-4 mr-1'"></lucide-angular> <span class="align-middle"> Remove Image</span>
+            </button>
+          </div>
+        } @else {
+          <div class="relative">
+            <label
+              class="w-44 h-auto max-w-full aspect-square bg-gray-100 dark:bg-zink-600 hover:opacity-80 duration-150 cursor-pointer rounded-full grid place-items-center"
+              (click)="imageFileInput.click()"
+            >
+              <lucide-angular name="image" [class]="'size-16 text-gray-300 dark:text-slate-200'"></lucide-angular>
+            </label>
+          </div>
+          <div class="flex flex-col items-center gap-3 w-full">
+            <button
+              type="button"
+              class="w-full max-w-48 bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20"
+              (click)="imageFileInput.click()"
+            >
+              <lucide-angular name="image-plus" [class]="'inline-block size-4 mr-1'"></lucide-angular> <span class="align-middle"> Select Image</span>
+            </button>
+          </div>
+        }
+      </div>
+      <input #imageFileInput type="file" class="hidden" (change)="onImageChange($event)" accept="image/*" />
+    </div>
+    <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-12">
+        <div class="md:col-span-12">
+          <label class="inline-block mb-2 text-base font-medium">Name <span class="text-red-500">*</span></label>
+          <input
+            type="text"
+            formControlName="name"
+            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+            placeholder="Enter material name"
+          />
+          @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+            <div class="mt-1 text-red-500 text-sm">Material name is required</div>
+          }
+        </div>
+        <div class="md:col-span-12">
+          <label class="inline-block mb-2 text-base font-medium">Unit of measurement (UOM)</label>
+          <input
+            type="text"
+            formControlName="uom"
+            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+            placeholder="Enter UOM. e.g. Bag, Box, Pack, etc."
+          />
+        </div>
+        <!--end col-->
+        <div class="md:col-span-12">
+          <label class="inline-block mb-2 text-base font-medium">Description</label>
+          <textarea
+            formControlName="description"
+            placeholder="Enter description"
+            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+            rows="3"
+          ></textarea>
+        </div>
+        <!--end col-->
+        <div class="md:col-span-6">
+          <label class="inline-block mb-2 text-base font-medium">Price <span class="text-red-500">*</span></label>
+          <input
+            type="number"
+            formControlName="price"
+            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+            placeholder="Enter price"
+          />
+          @if (form.get('price')?.hasError('required') && form.get('price')?.touched) {
+            <div class="mt-1 text-red-500 text-sm">Price is required</div>
+          } @else if (form.get('price')?.hasError('min') && form.get('price')?.touched) {
+            <div class="mt-1 text-red-500 text-sm">Price must be greater than or equal to 0</div>
+          }
+        </div>
+        <!--end col-->
+        <div class="md:col-span-6">
+          <label class="inline-block mb-2 text-base font-medium">Status <span class="text-red-500">*</span></label>
+          <ng-select [items]="statusOptions" placeholder="Select status" bindLabel="label" bindValue="value" [clearable]="false" formControlName="is_active"></ng-select>
+          @if (form.get('is_active')?.hasError('required') && form.get('is_active')?.touched) {
+            <div class="mt-1 text-red-500 text-sm">Status is required</div>
+          }
+        </div>
+        <!--end col-->
+      </div>
+    </div>
+  </div>
+</form>

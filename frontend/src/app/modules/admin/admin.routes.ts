@@ -23,6 +23,11 @@ export const ADMIN_ROUTES: Routes = [
         loadChildren: () => import('./products/products.routes').then((m) => m.PRODUCTS_ROUTES),
       },
       {
+        path: 'materials',
+        canActivate: [authGuard],
+        loadChildren: () => import('./materials/materials.routes').then((m) => m.MATERIALS_ROUTES),
+      },
+      {
         path: '**',
         pathMatch: 'full',
         redirectTo: 'dashboard',
