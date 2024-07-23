@@ -1,0 +1,41 @@
+<app-page-title [title]="'Create Service'" [pagetitle]="'Services'"></app-page-title>
+
+<div class="grid grid-cols-1 gap-x-5 xl:grid-cols-12">
+  <div class="xl:col-span-12">
+    <div class="card">
+      <div class="card-body border-b border-dashed border-slate-200 dark:border-zink-500">
+        <div class="flex items-center">
+          <h6 class="text-15 grow">Create Service Form</h6>
+        </div>
+      </div>
+      <div class="card-body">
+        <form action="">
+          <app-product-form [form]="productForm" (formSubmit)="submit()"></app-product-form>
+        </form>
+      </div>
+      <div class="card-body py-0">
+        <div class="flex justify-end gap-3">
+          <button
+            type="button"
+            class="text-slate-500 btn bg-slate-200 border-slate-200 hover:text-slate-600 hover:bg-slate-300 hover:border-slate-300 focus:text-slate-600 focus:bg-slate-300 focus:border-slate-300 focus:ring focus:ring-slate-100 active:text-slate-600 active:bg-slate-300 active:border-slate-300 active:ring active:ring-slate-100 dark:bg-zink-600 dark:hover:bg-zink-500 dark:border-zink-600 dark:hover:border-zink-500 dark:text-zink-200 dark:ring-zink-400/50"
+            (click)="back()"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            (click)="submit()"
+            class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 disabled:opacity-50 w-28 max-w-full"
+            [disabled]="productForm.disabled || isSubmitting"
+          >
+            @if (isSubmitting) {
+              <div class="inline-block size-3 border-2 rounded-full animate-spin border-l-transparent border-white"></div>
+            } @else {
+              <span>Save</span>
+            }
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
